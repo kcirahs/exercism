@@ -1,0 +1,37 @@
+// Package raindrops provides functions for translating numbers into
+// raindrop Speak.
+package raindrops
+
+import "strconv"
+
+type convTable []struct {
+	factor int
+	speak  string
+}
+
+var raindropSpeak = convTable{
+	{3, "Pling"},
+	{5, "Plang"},
+	{7, "Plong"},
+}
+
+// isFactor
+func isFactor(a int, table convTable) string {
+	var s string
+	for i := range table {
+		if a%table[i].factor == 0 {
+			s = s + table[i].speak
+		}
+	}
+	return s
+}
+
+func Convert(a int) string {
+
+	rainSaysWhat := isFactor(a, raindropSpeak)
+	if rainSaysWhat == "" {
+		return strconv.Itoa(a)
+	}
+
+	return rainSaysWhat
+}
