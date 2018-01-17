@@ -1,0 +1,19 @@
+package reverse
+
+import "sort"
+import "reflect"
+
+type Reverser []byte
+
+func (a Reverser) Len() int           { return len(a) }
+func (a Reverser) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a Reverser) Less(i, j int) bool { return a[i] < a[j] }
+
+func String(input string) string {
+	inputSlice := []byte(input)
+	swapFunc := reflect.Swapper(inputSlice)
+
+	reversed := Reverser(input)
+	sort.Reverse(reversed)
+	return string(reversed)
+}

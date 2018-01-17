@@ -8,18 +8,25 @@ const secinyear float64 = 31557600
 //Planet was defined in the test case data as its ow
 type Planet string
 
+var spaceAgeConv = map[Planet]float64{
+	"Earth":   1 * secinyear,
+	"Mercury": 0.2408467 * secinyear,
+	"Venus":   0.61519726 * secinyear,
+	"Mars":    1.8808158 * secinyear,
+	"Jupiter": 11.862615 * secinyear,
+	"Saturn":  29.447498 * secinyear,
+	"Uranus":  84.016846 * secinyear,
+	"Neptune": 164.79132 * secinyear,
+}
+
 //Age takes a given age in earth seconds and a planet, then
 //calculates the equivalent age on that planet.
 func Age(s float64, p Planet) float64 {
-	spaceAgeConv := map[Planet]float64{
-		"Earth":   1 * secinyear,
-		"Mercury": 0.2408467 * secinyear,
-		"Venus":   0.61519726 * secinyear,
-		"Mars":    1.8808158 * secinyear,
-		"Jupiter": 11.862615 * secinyear,
-		"Saturn":  29.447498 * secinyear,
-		"Uranus":  84.016846 * secinyear,
-		"Neptune": 164.79132 * secinyear,
+	var age float64
+	// first checks if planet is in the list to prevent division by 0
+	if _, ok := spaceAgeConv[p]; ok {
+		age = s / spaceAgeConv[p]
 	}
-	return s / spaceAgeConv[p]
+
+	return age
 }
